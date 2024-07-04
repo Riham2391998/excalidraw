@@ -1,0 +1,45 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    meta.helm.sh/release-name: excalidraw
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2024-07-02T17:10:03Z"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: excalidraw-hpa
+  namespace: default
+  resourceVersion: "176898"
+  uid: d4d26487-8b47-4152-9b3c-fdb01aefec37
+spec:
+  maxReplicas: 10
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 50
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: excalidraw
+status:
+  conditions:
+  - lastTransitionTime: "2024-07-02T17:10:06Z"
+    message: the HPA controller was able to get the target's current scale
+    reason: SucceededGetScale
+    status: "True"
+    type: AbleToScale
+  - lastTransitionTime: "2024-07-02T17:10:06Z"
+    message: 'the HPA was unable to compute the replica count: failed to get cpu utilization:
+      unable to get metrics for resource cpu: unable to fetch metrics from resource
+      metrics API: the server is currently unable to handle the request (get pods.metrics.k8s.io)'
+    reason: FailedGetResourceMetric
+    status: "False"
+    type: ScalingActive
+  currentMetrics:
+  - type: ""
+  currentReplicas: 2
+  desiredReplicas: 0
