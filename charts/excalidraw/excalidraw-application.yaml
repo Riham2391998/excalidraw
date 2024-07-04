@@ -7,8 +7,9 @@ spec:
   project: default
   source:
     chart: excalidraw
-    repoURL: git@github.com:Riham2391998/excalidraw.git
-    targetRevision: master
+    repoURL: 'git@github.com:Riham2391998/excalidraw.git'
+    path: 'charts/excalidraw'
+    targetRevision: main
     helm:
       releaseName: excalidraw
   destination:
