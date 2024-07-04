@@ -1,17 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: excalidraw1
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: excalidraw
   namespace: argocd
 spec:
+  destination:
+    name: in-cluster
+    namespace: argocd
   project: default
   source:
-    chart: excalidraw
+    
+    path: charts/excalidraw
     repoURL: 'git@github.com:Riham2391998/excalidraw.git'
-    path: 'charts/excalidraw'
     targetRevision: main
-    helm:
-      releaseName: excalidraw
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: excalidraw
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 30s
+      limit: 20
+      
+      
+      
+
